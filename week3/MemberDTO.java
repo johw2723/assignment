@@ -6,11 +6,6 @@ public class MemberDTO {
 	private UUID key;
 	private String name;
 	
-	/*public MemberDTO(UUID key, String name) {
-		this.key = key;
-		this.name = name;
-	}*/
-	
 	public UUID getKey() {
 		return key;
 	}
