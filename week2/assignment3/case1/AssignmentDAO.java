@@ -29,27 +29,53 @@ public class AssignmentDAO {
 		}
 				
 		AssignmentDAO dao = new AssignmentDAO();
-		//dao.update_dept_no(10);
 		
 		A a = new A();
 		B b = new B();
 
 		try{
-			int resultA = a.divide(50, 0);
-			dao.update_dept_no(resultA);
+			int resultA = a.divide(50, 0); // ¿À·ù
+			dao.update_emp(resultA); // ¸ØÃã null
+			dao.update_dept(resultA); // ¸ØÃã null
 			
+			// ¸ØÃã
 			int resultB = b.divide(50, 1);
-			dao.update_dept_no(resultB);
+			dao.update_emp(resultB);
+			dao.update_dept(resultB);
 		} catch(ArithmeticException e) {
 			e.printStackTrace();
 		}		
 	}
 	
-	public void update_dept_no(int num) {
-		System.out.println("update");
+	// emp Å×ÀÌºí TEST Ä®·³ °ª º¯°æ
+	public void update_emp(int num) {
+		System.out.println("emp Å×ÀÌºí TEST Ä®·³ °ª º¯°æ");
 		try{
 			con = DriverManager.getConnection(url, user, password);
-			query = "update emp set deptno=?";
+			query = "update emp set test=?";
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();	
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {			
+				pstmt.close();			
+				con.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	// dept Å×ÀÌºí TEST Ä®·³ °ª º¯°æ
+	public void update_dept(int num) {
+		System.out.println("dept Å×ÀÌºí TEST Ä®·³ °ª º¯°æ");
+		try{
+			con = DriverManager.getConnection(url, user, password);
+			query = "update dept set test=?";
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, num);
 			pstmt.executeUpdate();
