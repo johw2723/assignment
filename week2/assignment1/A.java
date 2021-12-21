@@ -10,7 +10,8 @@ abstract class A {
 		
 	public void setA(String a) { // 일반 메소드
 		this.a = a;
+		System.out.println("A 추상 클래스의 메소드");
 	}
 		
-	abstract void A(); // 추상 메소드 : 접근지정자 private 사용 x ... 자식 클래스에서 호출해야 하므로
+	abstract void methodA(); // 추상 메소드 : 접근지정자 private 사용 x ... 자식 클래스에서 호출해야 하므로
 }
