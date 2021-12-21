@@ -33,33 +33,59 @@ public class AssignmentDAO {
 		A a = new A();
 		B b = new B();
 		
-		int resultA = a.divide(50, 0);
-		dao.update_dept_no(resultA);
+		int resultA = a.divide(50, 0); // 오류
+		dao.update_emp(resultA); // 0 입력
+		dao.update_dept(resultA); // 0 입력
 		
-		int resultB = b.divide(50, 1);
-		dao.update_dept_no(resultB);		
+		int resultB = b.divide(50, 1); // 50
+		dao.update_emp(resultB); // 50 입력
+		dao.update_dept(resultB); // 50 입력	
 	}
 	
-	public void update_dept_no(int num) {
-		System.out.println("update");
-		try{
-			con = DriverManager.getConnection(url, user, password);
-			query = "update emp set deptno=?";
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, num);
-			pstmt.executeUpdate();
-		} catch(SQLException e) {
-			e.printStackTrace();	
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {			
-				pstmt.close();			
-				con.close();
+	// emp 테이블 TEST 칼럼 값 변경
+		public void update_emp(int num) {
+			System.out.println("emp 테이블 TEST 칼럼 값 변경");
+			try{
+				con = DriverManager.getConnection(url, user, password);
+				query = "update emp set test=?";
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, num);
+				pstmt.executeUpdate();
+			} catch(SQLException e) {
+				e.printStackTrace();	
 			} catch(Exception e) {
 				e.printStackTrace();
+			} finally {
+				try {			
+					pstmt.close();			
+					con.close();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
-	}
+		
+		// dept 테이블 TEST 칼럼 값 변경
+		public void update_dept(int num) {
+			System.out.println("dept 테이블 TEST 칼럼 값 변경");
+			try{
+				con = DriverManager.getConnection(url, user, password);
+				query = "update dept set test=?";
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, num);
+				pstmt.executeUpdate();
+			} catch(SQLException e) {
+				e.printStackTrace();	
+			} catch(Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {			
+					pstmt.close();			
+					con.close();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	
 }
