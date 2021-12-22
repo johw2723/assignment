@@ -5,10 +5,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import java.util.stream.Stream.Builder;
 
 public class Member {
 	public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -97,8 +104,24 @@ public class Member {
 			System.out.println("새로 등록할 회원명을 입력해주세요.");
 			String str = br.readLine();
 			
-			list.add(new MemberDTO(UUID.randomUUID(), str));
-
+			//list.add(new MemberDTO(UUID.randomUUID(), str));
+			
+			//ArrayList<MemberDTO> addList = new ArrayList<MemberDTO>();
+			//addList.add(new MemberDTO(UUID.randomUUID(), str));
+			
+			//list.stream().collect(Collectors.toList());
+			//Stream<MemberDTO> member = Stream.of(new MemberDTO(UUID.randomUUID(), str));
+			//Map<UUID, String> map = member.collect(Collectors.toMap(MemberDTO::getKey, MemberDTO::getName));
+			//list.add((MemberDTO) map);
+			//list.add((MemberDTO) member.collect(Collectors.toList()));
+			
+			//list = (ArrayList<MemberDTO>) Stream.of(new MemberDTO(UUID.randomUUID(), str)).collect(Collectors.toList());
+			
+			ArrayList<MemberDTO> list2 = new ArrayList<>(Arrays.asList(new MemberDTO(UUID.randomUUID(), str)));			
+			list = (ArrayList<MemberDTO>) Stream.of(list, list2).flatMap(x -> x.stream()).collect(Collectors.toList());
+			
+			
+			
 			System.out.println("회원 등록이 완료되었습니다.");
 		}
 		
@@ -143,9 +166,13 @@ public class Member {
 				String member = list.stream()
 						.filter(m -> m.getKey().equals(UUID.fromString(str)))
 						.findAny().get().getName();
+				
 				// 값 제거
-				list.stream().filter(m -> m.getKey().equals(UUID.fromString(str)))
-				.collect(Collectors.toList()).forEach(a -> list.remove(a));
+				/*list.stream().filter(m -> m.getKey().equals(UUID.fromString(str)))
+				.collect(Collectors.toList()).forEach(a -> list.remove(a));*/
+				
+				// 개선 : java8 이후 collection에 추가된 removeIf 함수
+				list.removeIf(m -> m.getKey().equals(UUID.fromString(str)));
 				
 				System.out.println(member + "님의 회원 정보가 삭제되었습니다.");		
 			} catch(IllegalArgumentException e) {
