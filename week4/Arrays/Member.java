@@ -22,36 +22,32 @@ public class Member {
 	
 	public static void main(String[] args) throws IOException {
 
-		/*List<MemberDTO> list = Arrays.asList(
-				new MemberDTO(UUID.randomUUID(), "?™ê¸¸ë™")
-				, new MemberDTO(UUID.randomUUID(), "ê°•ê°ì°?")
-				, new MemberDTO(UUID.randomUUID(), "?œ ê´??ˆœ")
-				, new MemberDTO(UUID.randomUUID(), "?´?ˆœ?‹ ")
-				, new MemberDTO(UUID.randomUUID(), "?¥?˜?‹¤")
+		
+		 /* List<MemberDTO> list = Arrays.asList(
+				new MemberDTO(UUID.randomUUID(), "í™ê¸¸ë™")
+				, new MemberDTO(UUID.randomUUID(), "ê°•ê°ì°¬?")
+				, new MemberDTO(UUID.randomUUID(), "ìœ ê´€ìˆœ")
+				, new MemberDTO(UUID.randomUUID(), "ì´ìˆœì‹ ")
+				, new MemberDTO(UUID.randomUUID(), "ì¥ì˜ì‹¤")
 		);*/
 		
 		ArrayList<MemberDTO> list = new ArrayList<>();
-		list.add(new MemberDTO(UUID.randomUUID(), "?™ê¸¸ë™"));
-		list.add(new MemberDTO(UUID.randomUUID(), "ê°•ê°ì°?"));
-		list.add(new MemberDTO(UUID.randomUUID(), "?œ ê´??ˆœ"));
-		list.add(new MemberDTO(UUID.randomUUID(), "?´?ˆœ?‹ "));
-		list.add(new MemberDTO(UUID.randomUUID(), "?¥?˜?‹¤"));
-					
-		/*List<ArrayList<MemberDTO>> stream = Arrays.asList(list);
-		stream.stream().forEach(i -> i.forEach(
-								j -> System.out.println("[key] : " + j.getKey() + " [name] : " + j.getName())));
-		System.out.println();*/
+		list.add(new MemberDTO(UUID.randomUUID(), "í™ê¸¸ë™"));
+		list.add(new MemberDTO(UUID.randomUUID(), "ê°•ê°ì°¬"));
+		list.add(new MemberDTO(UUID.randomUUID(), "ìœ ê´€ìˆœ"));
+		list.add(new MemberDTO(UUID.randomUUID(), "ì´ìˆœì‹ "));
+		list.add(new MemberDTO(UUID.randomUUID(), "ì¥ì˜ì‹¤"));
 	
-		System.out.println("1. ? „ì²? ì¡°íšŒ | 2. ?šŒ?› ì¡°íšŒ | 3. ?šŒ?› ì¶”ê? | 4. ?šŒ?› ê°±ì‹  | 5. ?šŒ?› ?‚­? œ");
+		System.out.println("1. ì „ì²´ ì¡°íšŒ | 2. íšŒì› ì¡°íšŒ | 3. íšŒì› ì¶”ê°€ | 4. íšŒì› ê°±ì‹  | 5. íšŒì› ì‚­ì œ");
 		int N = input_check(br.readLine());
 		
-		// ë¹„ì¦ˆ?‹ˆ?Š¤ ë¡œì§
+		// ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§
 		service(N, list);
 
-		System.out.println("?„œë¹„ìŠ¤ê°? ì¢…ë£Œ?˜?—ˆ?Šµ?‹ˆ?‹¤.");
+		System.out.println("ì„œë¹„ìŠ¤ê°€ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 	}
 
-	// ?…ì¶œë ¥ ê°? ê²?ì¦?
+	// ì…ì¶œë ¥ ê°’ ê²€ì¦
 	private static int input_check(String str) {
 		int N = 0;
 		
@@ -59,49 +55,49 @@ public class Member {
 			N = Integer.parseInt(str);
 
 		} catch(NumberFormatException e) {
-			System.out.println("?œ ?š¨?•˜ì§? ?•Š?? ?…? ¥?…?‹ˆ?‹¤.");
+			System.out.println("ìœ íš¨í•˜ì§€ ì•Šì€ ì…ë ¥ì…ë‹ˆë‹¤.");
 		}
 		return N;
 	}
 
 
-	// ë¹„ì¦ˆ?‹ˆ?Š¤ ë¡œì§ ê´?? ¨ ë©”ì†Œ?“œ
+	// ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ ê´€ë ¨ ë©”ì†Œë“œ
 	private static void service(int N, ArrayList<MemberDTO> list) throws IOException {		
-		// ? „ì²? ?šŒ?› ? •ë³? ì¡°íšŒ
+		// ì „ì²´ íšŒì› ì •ë³´ ì¡°íšŒ
 		if(N == 1) {
 			if(list.size() == 0) {
-				System.out.println("?“±ë¡ëœ ?šŒ?› ? •ë³´ê? ?—†?Šµ?‹ˆ?‹¤.");
+				System.out.println("ë“±ë¡ëœ íšŒì› ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 			}
 			else {				
 				list.stream().forEach(a -> System.out.println("[key] : " + a.getKey() + " [name] : " + a.getName()));
 			}	
 		}
 		
-		// keyë¡? ?šŒ?› ? •ë³? ì¡°íšŒ
+		// keyë¡œ íšŒì› ì •ë³´ ì¡°íšŒ
 		else if(N == 2) {
-			System.out.println("ì¡°íšŒ?•  ?šŒ?› ID ê°’ì„ ?…? ¥?•´ì£¼ì„¸?š”.");
+			System.out.println("ì¡°íšŒí•  íšŒì› ID ê°’ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			String str = br.readLine();
 			
 			if(list.size() == 0) {
-				System.out.println("?“±ë¡ëœ ?šŒ?› ? •ë³´ê? ?—†?Šµ?‹ˆ?‹¤.");
+				System.out.println("ë“±ë¡ëœ íšŒì› ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 			}
 			else {
 				try {
 					String member = list.stream()
 							.filter(m -> m.getKey().equals(UUID.fromString(str)))
 							.findAny().get().getName();
-					System.out.println("?šŒ?›ëª? : " + member);		
+					System.out.println("íšŒì›ëª… : " + member);		
 				} catch(IllegalArgumentException e) {
-					System.out.println("?œ ?š¨?•˜ì§? ?•Š?? ID ê°? ?…?‹ˆ?‹¤.");
+					System.out.println("ìœ íš¨í•˜ì§€ ì•Šì€ ID ê°’ ì…ë‹ˆë‹¤.");
 				} catch(NoSuchElementException e) {
-					System.out.println("ì¡°íšŒ?œ ? •ë³´ê? ?—†?Šµ?‹ˆ?‹¤.");
+					System.out.println("ì¡°íšŒëœ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 				}
 			}		
 		}
 
-		// ?šŒ?› ? •ë³? ì¶”ê?
+		// íšŒì› ì •ë³´ ì¶”ê°€
 		else if(N == 3) {
-			System.out.println("?ƒˆë¡? ?“±ë¡í•  ?šŒ?›ëª…ì„ ?…? ¥?•´ì£¼ì„¸?š”.");
+			System.out.println("ìƒˆë¡œ ë“±ë¡í•  íšŒì›ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			String str = br.readLine();
 			
 			// ë°©ë²•1
@@ -121,28 +117,28 @@ public class Member {
 			/*list = (ArrayList<MemberDTO>) Stream.concat(list.stream(), Arrays.asList(new MemberDTO(UUID.randomUUID(), str)).stream())
 					.collect(Collectors.toList());*/
 			
-			System.out.println("?šŒ?› ?“±ë¡ì´ ?™„ë£Œë˜?—ˆ?Šµ?‹ˆ?‹¤.");
+			System.out.println("íšŒì› ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 		}
 		
-		// key ?šŒ?› ? •ë³? ê°±ì‹ 
+		// key ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? ê°±ì‹ 
 		else if(N == 4) {
-			System.out.println("ê°±ì‹ ?•  ?šŒ?› ID ê°’ì„ ?…? ¥?•´ì£¼ì„¸?š”.");
+			System.out.println("ê°±ì‹ í•  íšŒì› ID ê°’ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			String str = br.readLine();
 			
 			if(list.size() == 0) {
-				System.out.println("?“±ë¡ëœ ?šŒ?› ? •ë³´ê? ?—†?Šµ?‹ˆ?‹¤.");
+				System.out.println("ë“±ë¡ëœ íšŒì› ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 			}
 			else {
 				try {
-					// ê°? ì¡°íšŒ
+					// ê°’ ì¡°íšŒ
 					list.stream()
 					.filter(m -> m.getKey().equals(UUID.fromString(str)))
 					.findAny().get().getName();
 					
-					System.out.println("ë³?ê²½í•  ?šŒ?›ëª…ì„ ?…? ¥?•´ì£¼ì„¸?š”.");
+					System.out.println("ë³€ê²½í•  íšŒì›ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 					String str2 = br.readLine();
 						
-					// ê°? ê°±ì‹  
+					// ê°’ ê°±ì‹ 
 					
 					// ë°©ë²•1
 					/*list.stream().filter(m -> m.getKey().equals(UUID.fromString(str)))
@@ -152,19 +148,19 @@ public class Member {
 					list.stream().filter(m -> m.getKey().equals(UUID.fromString(str)))
 					.forEach(m -> m.setName(str2));
 						
-					System.out.println(str2 + "(?œ¼)ë¡? ?šŒ?›ëª…ì´ ë³?ê²½ë˜?—ˆ?Šµ?‹ˆ?‹¤.");		
+					System.out.println(str2 + "(ìœ¼)ë¡œ íšŒì›ëª…ì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.");			
 					
 				} catch(IllegalArgumentException e) {
-					System.out.println("?œ ?š¨?•˜ì§? ?•Š?? ID ê°? ?…?‹ˆ?‹¤.");
+					System.out.println("ìœ íš¨í•˜ì§€ ì•Šì€ ID ê°’ ì…ë‹ˆë‹¤.");
 				} catch(NoSuchElementException e) {
-					System.out.println("ì¡°íšŒ?œ ? •ë³´ê? ?—†?Šµ?‹ˆ?‹¤.");
+					System.out.println("ì¡°íšŒëœ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 				}
 			}
 		}
 
-		// key ?šŒ?› ? •ë³? ?‚­? œ
+		// key íšŒì› ì •ë³´ ì‚­ì œ
 		else if(N == 5) {
-			System.out.println("?‚­? œ?•  ?šŒ?› ID ê°’ì„ ?…? ¥?•´ì£¼ì„¸?š”.");
+			System.out.println("ì‚­ì œí•  íšŒì› ID ê°’ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			String str = br.readLine();		
 			
 			try {
@@ -172,18 +168,18 @@ public class Member {
 						.filter(m -> m.getKey().equals(UUID.fromString(str)))
 						.findAny().get().getName();
 				
-				// ê°? ? œê±?
+				// ê°’ ì œê±°
 				/*list.stream().filter(m -> m.getKey().equals(UUID.fromString(str)))
 				.collect(Collectors.toList()).forEach(a -> list.remove(a));*/
 				
-				// ê°œì„  : java8 ?´?›„ collection?— ì¶”ê??œ removeIf ?•¨?ˆ˜
+				// ê°œì„  : java8 ?ï¿½ï¿½?ï¿½ï¿½ collection?ï¿½ï¿½ ì¶”ï¿½??ï¿½ï¿½ removeIf ?ï¿½ï¿½?ï¿½ï¿½
 				list.removeIf(m -> m.getKey().equals(UUID.fromString(str)));
 				
-				System.out.println(member + "?‹˜?˜ ?šŒ?› ? •ë³´ê? ?‚­? œ?˜?—ˆ?Šµ?‹ˆ?‹¤.");		
+				System.out.println(member + "ë‹˜ì˜ íšŒì› ì •ë³´ê°€ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.");		
 			} catch(IllegalArgumentException e) {
-				System.out.println("?œ ?š¨?•˜ì§? ?•Š?? ID ê°? ?…?‹ˆ?‹¤.");
+				System.out.println("ìœ íš¨í•˜ì§€ ì•Šì€ ID ê°’ ì…ë‹ˆë‹¤.");
 			} catch(NoSuchElementException e) {
-				System.out.println("ì¡°íšŒ?œ ? •ë³´ê? ?—†?Šµ?‹ˆ?‹¤.");
+				System.out.println("ì¡°íšŒëœ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 			}
 	
 		}
@@ -194,7 +190,7 @@ public class Member {
 				N = Integer.parseInt(temp);
 				service(N, list);
 			} catch(NumberFormatException e) {
-				System.out.println("?œ ?š¨?•˜ì§? ?•Š?? ?…? ¥?…?‹ˆ?‹¤.");
+				System.out.println("ìœ íš¨í•˜ì§€ ì•Šì€ ì…ë ¥ì…ë‹ˆë‹¤.");
 				temp = br.readLine();
 				service(N, list);
 			}
