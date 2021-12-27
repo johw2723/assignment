@@ -120,7 +120,7 @@ public class Member {
 			System.out.println("회원 등록이 완료되었습니다.");
 		}
 		
-		// key ?��?�� ?���? 갱신
+		// key 회원 정보 갱신
 		else if(N == 4) {
 			System.out.println("갱신할 회원 ID 값을 입력해주세요.");
 			String str = br.readLine();
@@ -172,7 +172,7 @@ public class Member {
 				/*list.stream().filter(m -> m.getKey().equals(UUID.fromString(str)))
 				.collect(Collectors.toList()).forEach(a -> list.remove(a));*/
 				
-				// 개선 : java8 ?��?�� collection?�� 추�??�� removeIf ?��?��
+				// 개선 : java8 이후 collection에 추가된 removeIf 함수
 				list.removeIf(m -> m.getKey().equals(UUID.fromString(str)));
 				
 				System.out.println(member + "님의 회원 정보가 삭제되었습니다.");		
