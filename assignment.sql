@@ -140,8 +140,8 @@ SELECT
 FROM
 	EMP
 WHERE
-	SAL <= 1500
-	OR SAL >= 2850;
+	SAL < 1500
+	OR SAL > 2850;
 
 -- 17. 출력정보 : 부서번호, 사번, 이름, 급여
 -- 조회조건 : 급여가 3000이상이거나, 부서번호 10인 직원
@@ -227,7 +227,7 @@ SELECT * FROM EMP WHERE ENAME LIKE '_____';
 SELECT ENAME FROM EMP WHERE DEPTNO = 10 OR DEPTNO = 20;
 
 -- 25. 부서가 10번, 20번이 아닌 직원 검색
-SELECT ENAME FROM EMP WHERE DEPTNO != 10 OR DEPTNO != 20;
+SELECT ENAME FROM EMP WHERE DEPTNO != 10 AND DEPTNO != 20;
 
 -- 26. 급여가 1500이상 ~ 2850이하의 범위에 속하는 사원의 이름 및 급여를 조회
 SELECT ENAME, SAL FROM EMP WHERE SAL BETWEEN 1500 AND 2850;
@@ -279,7 +279,8 @@ FROM
 
 
 -- 31. 사번이 000인 직원의 이름은 000이다
-SELECT ENAME FROM EMP WHERE EMPNO = 000;
+SELECT CONCAT ( CONCAT ( CONCAT( CONCAT('사번이 ', EMPNO), '인 직원의 이름은 '), ENAME), '이다') FROM EMP
+SELECT '사번이 ' || EMPNO || '인 직원의 이름은 ' || ENAME || '이다' FROM EMP
 
 -- 32. 근무기간에 따른 사원들에 대한 교육을 진행하기로 하였다.
 -- 직원들의 사번, 이름, 입사일, 근무기간(년수, 년이하버림)의 정보를 
