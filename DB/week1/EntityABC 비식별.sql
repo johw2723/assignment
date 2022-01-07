@@ -1,4 +1,4 @@
---��ĺ�
+--비식별
 CREATE TABLE "A" (
 	"a"	VARCHAR(255)		NOT NULL
 );
