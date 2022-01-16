@@ -1,12 +1,9 @@
---Å×ÀÌºí »ý¼º
-drop table EMP_SEQUENCE_TB
-
 CREATE TABLE EMP_SEQUENCE_TB (
        emp_no      number(10)
      , emp_name    varchar2(30)
 );
 
--- ½ÃÄö½º »ý¼º
+-- ì‹œí€€ìŠ¤ ìƒì„±
 CREATE SEQUENCE emp_seq
 START WITH 1
 INCREMENT BY 1
