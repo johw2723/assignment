@@ -64,29 +64,32 @@ REFERENCES "C" (
 	"c"
 );
 
-select * from A, B, C, D;
--- a, aa, aaa, / b, bb, bbb, a, / c, cc, ccc, b, / d, dd, ddd, c
+select	A."a" as A_a, A."aa" as A_aa, A."aaa" as A_aaa
+		, B."b" as B_b, B."bb" as B_bb, B."bbb" as B_bbb, B."a" as B_a
+		, C."c" as C_c, C."cc" as C_cc, C."ccc" as C_ccc, C."b" as C_b
+		, D."d" as D_d, D."dd" as D_dd, D."ddd" as D_ddd, D."c" as D_c
+from 	A, B, C, D;
+-- A_A, A_AA, A_AAA, B_B, B_BB, B_BBB, B_A, C_C, C_CC, C_CCC, C_B, D_D, D_DD, D_DDD, D_C
 
-select * from A, B, C, D
-where A."a" = B."a"
-and B."b" = C."b"
-and C."c" = D."c"
--- a, aa, aaa, / b, bb, bbb, a / c, cc, ccc, b, / d, dd, ddd, c
+select	A."a" as A_a, A."aa" as A_aa, A."aaa" as A_aaa
+		, B."b" as B_b, B."bb" as B_bb, B."bbb" as B_bbb, B."a" as B_a
+		, C."c" as C_c, C."cc" as C_cc, C."ccc" as C_ccc, C."b" as C_b
+		, D."d" as D_d, D."dd" as D_dd, D."ddd" as D_ddd, D."c" as D_c
+from 	A, B, C, D
+where 	A."a" = B."a"
+and 	B."b" = C."b"
+and 	C."c" = D."c"
+-- A_A, A_AA, A_AAA, B_B, B_BB, B_BBB, B_A, C_C, C_CC, C_CCC, C_B, D_D, D_DD, D_DDD, D_C
 
-select * from 	A
+select 	"a" as a, A."aa" as A_aa, A."aaa" as A_aaa
+		, "b" as b, B."bb" as B_bb, B."bbb" as B_bbb
+		, "c" as c, C."cc" as C_cc, C."ccc" as C_ccc
+		, "d" as d, D."dd" as D_dd, D."ddd" as D_ddd
+from 	A
 natural join	B
 natural join 	C
 natural join 	D;
--- c, b, a, aa, aaa, bb, bbb, cc, ccc, d, dd, ddd
-
-select * from A, B, C, D
-where A."a"(+)  = B."a"
-and B."b" = C."b"(+)
-and C."c" = D."c"(+);
--- a null, aa null, aaa null
--- b 2   , bb null, bbb null, a null
--- c null, cc null, ccc null, b null
--- d null, dd null, ddd null, c null
+-- A, A_AA, A_AAA, B, B_BB, B_BBB, C, C_CC, C_CCC, D, D_DD, D_DDD
 
 insert into A("a") values('1');
 select * from A;
@@ -96,19 +99,28 @@ insert into B("b") values('2');
 select * from B; 
 -- b 2, bb null, bbb null, a null
 
-select * from A, B
--- a 1, aa null, aaa null, 
--- b 2, bb null, bbb null, a null
+select	A."a" as A_a, A."aa" as A_aa, A."aaa" as A_aaa
+		, B."b" as B_b, B."bb" as B_bb, B."bbb" as B_bbb, B."a" as B_a
+from 	A, B
+-- A_A = 1, A_AA = null, A_AAA = null, 
+-- B_B = 2, B_BB = null, B_BBB = null, B_A = null
 
-select * from A, B where A."a"(+) = B."a"
--- a null, aa null, aaa null,
--- b 2	 , bb null, bbb null, a null
+select	A."a" as A_a, A."aa" as A_aa, A."aaa" as A_aaa
+		, B."b" as B_b, B."bb" as B_bb, B."bbb" as B_bbb, B."a" as B_a
+from 	A, B 
+where 	A."a"(+) = B."a"
+-- A_A = null, A_AA = null, A_AAA = null, 
+-- B_B = 2, B_BB = null, B_BBB = null, B_A = null
 
-select * from A, B where A."a" = B."a"(+)
--- a 1	 , aa null, aaa null,
--- b null, bb null, bbb null, a null
+select 	A."a" as A_a, A."aa" as A_aa, A."aaa" as A_aaa
+		, B."b" as B_b, B."bb" as B_bb, B."bbb" as B_bbb, B."a" as B_a
+from 	A, B 
+where 	A."a" = B."a"(+)
+-- A_A = 1, A_AA = null, A_AAA = null, 
+-- B_B = null, B_BB = null, B_BBB = null, B_A = null
 
--- ∞¸∞Ë∞° ¡¶¥Î∑Œ ¿Ã∑ÁæÓ¡ˆ¡ˆ æ ¿Ω
+-- Í¥ÄÍ≥ÑÍ∞Ä Ï†úÎåÄÎ°ú Ïù¥Î£®Ïñ¥ÏßÄÏßÄ ÏïäÏùå
+
 
 
 

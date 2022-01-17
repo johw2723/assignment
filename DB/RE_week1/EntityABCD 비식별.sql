@@ -64,20 +64,32 @@ REFERENCES "C" (
 	"c"
 );
 
-select * from A, B, C, D;
--- a, aa, aaa, / b, bb, bbb, a, / c, cc, ccc, b, / d, dd, ddd, c
+select	A."a" as A_a, A."aa" as A_aa, A."aaa" as A_aaa
+		, B."b" as B_b, B."bb" as B_bb, B."bbb" as B_bbb, B."a" as B_a
+		, C."c" as C_c, C."cc" as C_cc, C."ccc" as C_ccc, C."b" as C_b
+		, D."d" as D_d, D."dd" as D_dd, D."ddd" as D_ddd, D."c" as D_c
+from 	A, B, C, D;
+-- A_A, A_AA, A_AAA, B_B, B_BB, B_BBB, B_A, C_C, C_CC, C_CCC, C_B, D_D, D_DD, D_DDD, D_C
 
-select * from A, B, C, D
-where A."a" = B."a"
-and B."b" = C."b"
-and C."c" = D."c"
--- a, aa, aaa, / b, bb, bbb, a / c, cc, ccc, b, / d, dd, ddd, c
+select	A."a" as A_a, A."aa" as A_aa, A."aaa" as A_aaa
+		, B."b" as B_b, B."bb" as B_bb, B."bbb" as B_bbb, B."a" as B_a
+		, C."c" as C_c, C."cc" as C_cc, C."ccc" as C_ccc, C."b" as C_b
+		, D."d" as D_d, D."dd" as D_dd, D."ddd" as D_ddd, D."c" as D_c 
+from 	A, B, C, D
+where 	A."a" = B."a"
+and 	B."b" = C."b"
+and 	C."c" = D."c"
+-- A_A, A_AA, A_AAA, B_B, B_BB, B_BBB, B_A, C_C, C_CC, C_CCC, C_B, D_D, D_DD, D_DDD, D_C
 
-select * from 	A
+select	"a" as a, A."aa" as A_aa, A."aaa" as A_aaa
+		, "b" as b, B."bb" as B_bb, B."bbb" as B_bbb
+		, "c" as c, C."cc" as C_cc, C."ccc" as C_ccc
+		, "d" as d, D."dd" as D_dd, D."ddd" as D_ddd
+from 	A
 natural join	B
 natural join 	C
 natural join 	D;
--- c, b, a, aa, aaa, bb, bbb, cc, ccc, d, dd, ddd
+-- A, A_AA, A_AAA, B, B_BB, B_BBB, C, C_CC, C_CCC, D, D_DD, D_DDD
 
 
 insert into B("b", "bb", "bbb", "a") values('2', null, null, null);
@@ -91,14 +103,18 @@ insert into B("b", "a") values ('2','1');
 select * from A; -- a 1, aa null, aaa null
 select * from B; -- b 2, bb null, bbb null, a 1
 
-select * from A, B, C, D
-where A."a" = B."a"
-and B."b" = C."b"(+)
-and C."c" = D."d"(+);
--- a 1	 , aa null, aaa null
--- b 2   , bb null, bbb null, a 1
--- c null, cc null, ccc null, b null
--- d null, dd null, ddd null, c null
+select	A."a" as A_a, A."aa" as A_aa, A."aaa" as A_aaa
+		, B."b" as B_b, B."bb" as B_bb, B."bbb" as B_bbb, B."a" as B_a
+		, C."c" as C_c, C."cc" as C_cc, C."ccc" as C_ccc, C."b" as C_b
+		, D."d" as D_d, D."dd" as D_dd, D."ddd" as D_ddd, D."c" as D_c 
+from 	A, B, C, D
+where 	A."a" = B."a"
+and 	B."b" = C."b"(+)
+and 	C."c" = D."c"(+);
+-- A_A = 1, A_AA = null, A_AAA = null
+-- B_B = 2, B_BB = null, B_BBB = null, B_A = 1
+-- C_C = null, C_CC = null, C_CCC = null, C_B = null
+-- D_D = null, D_DD = null, D_DDD = null, D_C = null
 
 insert into C("c", "b") values('3','1'); 
 --ORA-02291: integrity constraint (SCOTT.FK_B_TO_C_1) violated - parent key not found
@@ -106,11 +122,15 @@ insert into C("c", "b") values('3','1');
 insert into C("c", "b") values('3','2');
 insert into D("d", "c") values('4','3');
 
-select * from A, B, C, D
-where A."a" = B."a"
-and B."b" = C."b"
-and C."c" = D."c";
--- a 1	 , aa null, aaa null
--- b 2   , bb null, bbb null, a 1
--- c 3	 , cc null, ccc null, b 2
--- d 4	 , dd null, ddd null, c 3
+select	A."a" as A_a, A."aa" as A_aa, A."aaa" as A_aaa
+		, B."b" as B_b, B."bb" as B_bb, B."bbb" as B_bbb, B."a" as B_a
+		, C."c" as C_c, C."cc" as C_cc, C."ccc" as C_ccc, C."b" as C_b
+		, D."d" as D_d, D."dd" as D_dd, D."ddd" as D_ddd, D."c" as D_c 
+from 	A, B, C, D
+where 	A."a" = B."a"
+and 	B."b" = C."b"
+and 	C."c" = D."c";
+-- A_A = 1, A_AA = null, A_AAA = null
+-- B_B = 2, B_BB = null, B_BBB = null, B_A = 1
+-- C_C = 3, C_CC = null, C_CCC = null, C_B = 2
+-- D_D = 4, D_DD = null, D_DDD = null, D_C = 3
