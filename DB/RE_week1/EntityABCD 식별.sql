@@ -121,3 +121,6 @@ SELECT * FROM USER_INDEXES; -- 사용자가 소유한 인덱스의 정보를 조
 SELECT * FROM USER_TAB_COLUMNS; -- 사용자가 소유한 테이블과 테이블의 컬럼들의 정보 조회
 SELECT * FROM USER_COL_COMMENTS;-- 사용자가 소유한 테이블과 칼럼, 코멘트 조회
 SELECT * FROM USER_CONSTRAINTS; -- 제약 조건 확인
+SELECT * FROM COLS WHERE TABLE_NAME = 'A'; -- 특정 테이블의 모든 컬럼 조회
+
+SELECT TABLE_NAME||'.'||COLUMN_NAME as A_COLS FROM COLS WHERE TABLE_NAME = 'A'
