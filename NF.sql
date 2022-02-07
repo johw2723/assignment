@@ -149,6 +149,7 @@ from 교수, 성적_BCNF
 where 교수.과목번호 = 성적_BCNF.과목번호
 
 ------------ 4NF ------------------ 다치 종속 제거
+drop table 개발자정보_4NF
 CREATE TABLE 개발자정보_4NF (
 	개발자	VARCHAR(255)	NOT NULL
 );
@@ -157,28 +158,58 @@ ALTER TABLE 개발자정보_4NF ADD CONSTRAINT PK_개발자정보_4NF PRIMARY KE
 	개발자
 );
 
-CREATE TABLE 자격증4 (
-	자격증	VARCHAR(255)	NULL,
-	개발자	VARCHAR(255)	NOT NULL
+CREATE TABLE 자격증_4NF (
+	자격증	VARCHAR(255)	NOT NULL
 );
 
-ALTER TABLE 자격증4 ADD CONSTRAINT FK_TO_자격증4_1 FOREIGN KEY (
+ALTER TABLE 자격증_4NF ADD CONSTRAINT PK_자격증_4NF PRIMARY KEY (
+	자격증
+);
+
+CREATE TABLE 언어_4NF (
+	언어	VARCHAR(255)	NOT NULL
+);
+
+ALTER TABLE 언어_4NF ADD CONSTRAINT PK_언어_4NF PRIMARY KEY (
+	언어
+);
+
+CREATE TABLE 개발_자격 (
+	개발자	VARCHAR(255)	NOT NULL,
+	자격증	VARCHAR(255)	NOT NULL
+);
+
+ALTER TABLE 개발_자격 ADD CONSTRAINT FK_TO_개발_자격_1 FOREIGN KEY (
 	개발자
 )
 REFERENCES 개발자정보_4NF (
 	개발자
 );
 
-CREATE TABLE 언어4 (
-	언어	VARCHAR(255)	NULL,
-	개발자	VARCHAR(255)	NOT NULL
+ALTER TABLE 개발_자격 ADD CONSTRAINT FK_개발_자격_1 FOREIGN KEY (
+	자격증
+)
+REFERENCES 자격증_4NF (
+	자격증
 );
 
-ALTER TABLE 언어4 ADD CONSTRAINT FK_TO_언어4_1 FOREIGN KEY (
+CREATE TABLE 개발_언어 (
+	개발자	VARCHAR(255)	NOT NULL,
+	언어	VARCHAR(255)	NOT NULL
+);
+
+ALTER TABLE 개발_언어 ADD CONSTRAINT FK_TO_개발_언어_1 FOREIGN KEY (
 	개발자
 )
 REFERENCES 개발자정보_4NF (
 	개발자
+);
+
+ALTER TABLE 개발_언어 ADD CONSTRAINT FK_TO_개발_언어_2 FOREIGN KEY (
+	언어
+)
+REFERENCES 언어_4NF (
+	언어
 );
 
 select * from 개발자정보_4NF
@@ -186,90 +217,148 @@ insert into 개발자정보_4NF(개발자) values('유재석')
 insert into 개발자정보_4NF(개발자) values('강호동')
 insert into 개발자정보_4NF(개발자) values('김성주')
 
-select * from 자격증4
-insert into 자격증4(개발자, 자격증) values('유재석', '정보처리기사')
-insert into 자격증4(개발자, 자격증) values('유재석', '빅데이터 분석 기사')
-insert into 자격증4(개발자, 자격증) values('강호동', '정보처리기사')
-insert into 자격증4(개발자, 자격증) values('김성주', '정보처리기사')
+select * from 자격증_4NF
+insert into 자격증_4NF(자격증) values('정보처리기사')
+insert into 자격증_4NF(자격증) values('빅데이터 분석 기사')
 
-select * from 언어4
-insert into 언어4(개발자, 언어) values('유재석', 'C')
-insert into 언어4(개발자, 언어) values('유재석', 'JAVA')
-insert into 언어4(개발자, 언어) values('강호동', 'C++')
-insert into 언어4(개발자, 언어) values('김성주', 'C')
+select * from 개발_자격
+insert into 개발_자격(개발자, 자격증) values('유재석', '정보처리기사')
+insert into 개발_자격(개발자, 자격증) values('유재석', '빅데이터 분석 기사')
+insert into 개발_자격(개발자, 자격증) values('강호동', '정보처리기사')
+insert into 개발_자격(개발자, 자격증) values('김성주', '정보처리기사')
 
-select DISTINCT 개발자정보_4NF.개발자, 자격증4.자격증, 언어4.언어
-from 개발자정보_4NF, 자격증4, 언어4
-where 개발자정보_4NF.개발자 = 자격증4.개발자
-and 개발자정보_4NF.개발자 = 언어4.개발자
-and 자격증4.개발자 = 언어4.개발자
+select * from 언어_4NF
+insert into 언어_4NF(언어) values('C')
+insert into 언어_4NF(언어) values('JAVA')
+insert into 언어_4NF(언어) values('C++')
+
+select * from 개발_언어
+insert into 개발_언어(개발자, 언어) values('유재석', 'C')
+insert into 개발_언어(개발자, 언어) values('유재석', 'JAVA')
+insert into 개발_언어(개발자, 언어) values('강호동', 'C++')
+insert into 개발_언어(개발자, 언어) values('김성주', 'C')
+
+select	개발_자격.개발자, 개발_자격.자격증, 개발_언어.언어
+from	개발_자격, 개발_언어
+where	개발_자격.개발자 = 개발_언어.개발자
 
 
 ------------ 5NF --------------- 조인 종속성 이용
-CREATE TABLE 개발자정보 (
+CREATE TABLE 개발자정보_5NF (
 	개발자	VARCHAR(255)	NOT NULL
 );
 
-ALTER TABLE 개발자정보 ADD CONSTRAINT PK_개발자정보 PRIMARY KEY (
+ALTER TABLE 개발자정보_5NF ADD CONSTRAINT PK_개발자정보_5NF PRIMARY KEY (
 	개발자
 );
 
-CREATE TABLE 자격증 (
-	자격증	VARCHAR(255)	NULL,
-	개발자	VARCHAR(255)	NOT NULL
+CREATE TABLE 자격증_5NF (
+	자격증	VARCHAR(255)	NOT NULL
 );
 
-ALTER TABLE 자격증 ADD CONSTRAINT FK_TO_자격증_1 FOREIGN KEY (
+ALTER TABLE 자격증_5NF ADD CONSTRAINT PK_자격증_5NF PRIMARY KEY (
+	자격증
+);
+
+CREATE TABLE 언어_5NF (
+	언어	VARCHAR(255)	NOT NULL
+);
+
+ALTER TABLE 언어_5NF ADD CONSTRAINT PK_언어_5NF PRIMARY KEY (
+	언어
+);
+
+CREATE TABLE 개발_자격_5NF (
+	개발자	VARCHAR(255)	NOT NULL,
+	자격증	VARCHAR(255)	NOT NULL
+);
+
+ALTER TABLE 개발_자격_5NF ADD CONSTRAINT FK_TO_개발_자격_5NF_1 FOREIGN KEY (
 	개발자
 )
-REFERENCES 개발자정보 (
+REFERENCES 개발자정보_5NF (
 	개발자
 );
 
-CREATE TABLE 언어 (
-	언어	VARCHAR(255)	NULL,
-	개발자	VARCHAR(255)	NOT NULL
+ALTER TABLE 개발_자격_5NF ADD CONSTRAINT FK_TO_개발_자격_5NF_2 FOREIGN KEY (
+	자격증
+)
+REFERENCES 자격증_5NF (
+	자격증
 );
 
-ALTER TABLE 언어 ADD CONSTRAINT FK_TO_언어_1 FOREIGN KEY (
+CREATE TABLE 개발_언어_5NF (
+	개발자	VARCHAR(255)	NOT NULL,
+	언어	VARCHAR(255)	NOT NULL
+);
+
+ALTER TABLE 개발_언어_5NF ADD CONSTRAINT FK_TO_개발_언어_5NF_1 FOREIGN KEY (
 	개발자
 )
-REFERENCES 개발자정보 (
+REFERENCES 개발자정보_5NF (
 	개발자
 );
 
-CREATE TABLE 자격증_언어 (
-	자격증	VARCHAR(255)	NULL,
-	언어	VARCHAR(255)	NULL
+ALTER TABLE 개발_언어_5NF ADD CONSTRAINT FK_TO_개발_언어_5NF_2 FOREIGN KEY (
+	언어
+)
+REFERENCES 언어_5NF (
+	언어
 );
 
-select * from 개발자정보
-insert into 개발자정보(개발자) values('유재석')
-insert into 개발자정보(개발자) values('강호동')
-insert into 개발자정보(개발자) values('김성주')
+CREATE TABLE 자격_언어_5NF (
+	자격증	VARCHAR(255)	NOT NULL,
+	언어	VARCHAR(255)	NOT NULL
+);
 
-select * from 자격증
-insert into 자격증(개발자, 자격증) values('유재석', '정보처리기사')
-insert into 자격증(개발자, 자격증) values('유재석', '빅데이터 분석 기사')
-insert into 자격증(개발자, 자격증) values('강호동', '정보처리기사')
-insert into 자격증(개발자, 자격증) values('김성주', '정보처리기사')
+ALTER TABLE 자격_언어_5NF ADD CONSTRAINT FK_TO_자격_언어_5NF_1 FOREIGN KEY (
+	자격증
+)
+REFERENCES 자격증_5NF (
+	자격증
+);
 
-select * from 언어
-insert into 언어(개발자, 언어) values('유재석', 'C')
-insert into 언어(개발자, 언어) values('유재석', 'JAVA')
-insert into 언어(개발자, 언어) values('강호동', 'C++')
-insert into 언어(개발자, 언어) values('김성주', 'C')
+ALTER TABLE 자격_언어_5NF ADD CONSTRAINT FK_TO_자격_언어_5NF_2 FOREIGN KEY (
+	언어
+)
+REFERENCES 언어_5NF (
+	언어
+);
 
-select * from 자격증_언어
-insert into 자격증_언어(자격증, 언어) values('정보처리기사', 'C')
-insert into 자격증_언어(자격증, 언어) values('빅데이터 분석 기사', 'JAVA')
-insert into 자격증_언어(자격증, 언어) values('정보처리기사', 'C++')
-insert into 자격증_언어(자격증, 언어) values('정보처리기사', 'C')
+select * from 개발자정보_5NF
+insert into 개발자정보_5NF(개발자) values('유재석')
+insert into 개발자정보_5NF(개발자) values('강호동')
+insert into 개발자정보_5NF(개발자) values('김성주')
 
-select DISTINCT  자격증.개발자, 자격증.자격증, 언어.언어
-from 개발자정보, 자격증, 언어, 자격증_언어
-where 개발자정보.개발자 = 자격증.개발자
-and 개발자정보.개발자 = 언어.개발자
-and 자격증.개발자 = 언어.개발자
-and 자격증_언어.자격증 = 자격증.자격증
-and 자격증_언어.언어 = 언어.언어
+select * from 자격증_5NF
+insert into 자격증_5NF(자격증) values('정보처리기사')
+insert into 자격증_5NF(자격증) values('빅데이터 분석 기사')
+
+select * from 언어_5NF
+insert into 언어_5NF(언어) values('C')
+insert into 언어_5NF(언어) values('JAVA')
+insert into 언어_5NF(언어) values('C++')
+
+select * from 개발_자격_5NF
+insert into 개발_자격_5NF(개발자, 자격증) values('유재석', '정보처리기사')
+insert into 개발_자격_5NF(개발자, 자격증) values('유재석', '빅데이터 분석 기사')
+insert into 개발_자격_5NF(개발자, 자격증) values('강호동', '정보처리기사')
+insert into 개발_자격_5NF(개발자, 자격증) values('김성주', '정보처리기사')
+
+select * from 개발_언어_5NF
+insert into 개발_언어_5NF(개발자, 언어) values('유재석', 'C')
+insert into 개발_언어_5NF(개발자, 언어) values('유재석', 'JAVA')
+insert into 개발_언어_5NF(개발자, 언어) values('강호동', 'C++')
+insert into 개발_언어_5NF(개발자, 언어) values('김성주', 'C')
+
+select * from 자격_언어_5NF
+insert into 자격_언어_5NF(자격증, 언어) values('정보처리기사', 'C')
+insert into 자격_언어_5NF(자격증, 언어) values('빅데이터 분석 기사', 'JAVA')
+insert into 자격_언어_5NF(자격증, 언어) values('정보처리기사', 'C++')
+insert into 자격_언어_5NF(자격증, 언어) values('정보처리기사', 'C')
+
+select	DISTINCT 개발_자격_5NF.개발자, 개발_자격_5NF.자격증, 개발_언어_5NF.언어
+from	개발_자격_5NF, 개발_언어_5NF, 자격_언어_5NF
+where	개발_자격_5NF.개발자 = 개발_언어_5NF.개발자
+and		개발_언어_5NF.언어 = 자격_언어_5NF.언어
+and		자격_언어_5NF.자격증 = 개발_자격_5NF.자격증
